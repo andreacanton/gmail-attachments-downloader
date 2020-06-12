@@ -1,0 +1,26 @@
+{
+  "name": "gmail-attachments-downloader",
+  "version": "1.0.0",
+  "description": "a script for downloading in separate folders the attachments of a gmail account",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreacanton/gmail-attachments-downloader.git"
+  },
+  "keywords": [
+    "nodejs",
+    "googleapi"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andreacanton/gmail-attachments-downloader/issues"
+  },
+  "homepage": "https://github.com/andreacanton/gmail-attachments-downloader#readme",
+  "dependencies": {
+    "googleapis": "^39.2.0"
+  }
+}
