@@ -1,2 +1,5 @@
-# gmail-attatchments-downloader
-a script for downloading in separate folders the attatchments of a gmail account
+# Gmail Attacthment Downloader
+
+## the idea
+Using the [Gmail API](https://developers.google.com/gmail/api/guides) make a script that check the inbox for email with attatchments and downloaded in a local location.
+The files will be separated in folder by sender and date (hour)
