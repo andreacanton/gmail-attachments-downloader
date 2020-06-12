@@ -1,4 +1,4 @@
-# Gmail Attacthment Downloader
+# Gmail Attachments Downloader
 
 ## the idea
 Using the [Gmail API](https://developers.google.com/gmail/api/guides) make a script that check the inbox for email with attatchments and downloaded in a local location.
