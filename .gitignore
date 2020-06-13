@@ -105,3 +105,4 @@ dist
 
 #google API
 credentials.json
+token.json
