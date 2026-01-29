@@ -144,30 +144,30 @@
 - **Dependencies:** T1.1
 - **Description:** Create ZIP archive from array of file objects
 - **Acceptance Checks:**
-  - [ ] Accepts array of `{filename, data}` objects
-  - [ ] Creates ZIP using JSZip
-  - [ ] Returns ZIP as Buffer
+  - [x] Accepts array of `{filename, data}` objects
+  - [x] Creates ZIP using JSZip
+  - [x] Returns ZIP as Buffer
 
 ### T4.2 - Implement duplicate filename handling
 - **Difficulty:** simple
 - **Dependencies:** T4.1
 - **Description:** Rename duplicate filenames by appending counter
 - **Acceptance Checks:**
-  - [ ] Detects duplicate filenames
-  - [ ] Renames duplicates as `name_1.ext`, `name_2.ext`, etc.
-  - [ ] Preserves file extension
-  - [ ] Works with files without extensions
+  - [x] Detects duplicate filenames
+  - [x] Renames duplicates as `name_1.ext`, `name_2.ext`, etc.
+  - [x] Preserves file extension
+  - [x] Works with files without extensions
 
 ### T4.3 - Implement writeZipToFile()
 - **Difficulty:** simple
 - **Dependencies:** T4.1
 - **Description:** Write ZIP buffer to disk with error handling
 - **Acceptance Checks:**
-  - [ ] Writes ZIP to specified path with `Bun.write()`
-  - [ ] Handles "file exists" - overwrite with warning
-  - [ ] Handles permission errors - exit with message
-  - [ ] Handles disk full - exit with message
-  - [ ] Returns final file path
+  - [x] Writes ZIP to specified path with `Bun.write()`
+  - [x] Handles "file exists" - overwrite with warning
+  - [x] Handles permission errors - exit with message
+  - [x] Handles disk full - exit with message
+  - [x] Returns final file path
 
 ---
 
@@ -275,13 +275,13 @@
 | 1 | Project Setup | 3 | 3 | 0 |
 | 2 | Authentication | 5 | 5 | 0 |
 | 3 | Gmail API Operations | 4 | 4 | 0 |
-| 4 | ZIP Creation | 3 | 0 | 3 |
+| 4 | ZIP Creation | 3 | 3 | 0 |
 | 5 | CLI Interface | 5 | 0 | 5 |
 | 6 | Testing & Documentation | 3 | 0 | 3 |
-| **Total** | | **23** | **12** | **11** |
+| **Total** | | **23** | **15** | **8** |
 
-### Progress: 12/23 tasks complete (52%)
+### Progress: 15/23 tasks complete (65%)
 
-### Next Task: T4.1 - Implement createZip()
-- Dependencies met (T1.1 complete)
+### Next Task: T5.1 - Implement argument parsing
+- Dependencies met (T1.3 complete)
 - Simple difficulty
