@@ -156,6 +156,9 @@ export async function getMessageAttachments(
   return extractAttachments(message.payload?.parts, messageId);
 }
 
+// Export internal functions for testing
+export { extractAttachments, withRetry };
+
 // T3.3 - Download a single attachment
 export async function downloadAttachment(
   auth: OAuth2Client,

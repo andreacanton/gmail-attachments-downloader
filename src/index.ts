@@ -247,8 +247,13 @@ async function main(): Promise<void> {
   process.exit(EXIT_SUCCESS);
 }
 
-// Run main
-main().catch((error) => {
-  console.error("Unexpected error:", error);
-  process.exit(EXIT_API_ERROR);
-});
+// Export functions for testing
+export { parseArgs, formatBytes };
+
+// Run main only when executed directly (not when imported for testing)
+if (import.meta.main) {
+  main().catch((error) => {
+    console.error("Unexpected error:", error);
+    process.exit(EXIT_API_ERROR);
+  });
+}
