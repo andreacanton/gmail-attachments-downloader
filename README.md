@@ -82,7 +82,6 @@ bun run src/index.ts "subject:invoice has:attachment after:2024/01/01" --output 
 | `from:` | Sender email | `from:boss@company.com` |
 | `to:` | Recipient email | `to:me@example.com` |
 | `subject:` | Words in subject | `subject:meeting` |
-| `has:attachment` | Has attachments | `has:attachment` |
 | `filename:` | Attachment filename | `filename:pdf` |
 | `larger:` | Size larger than | `larger:5M` |
 | `smaller:` | Size smaller than | `smaller:1M` |
@@ -91,9 +90,11 @@ bun run src/index.ts "subject:invoice has:attachment after:2024/01/01" --output 
 | `is:unread` | Unread emails | `is:unread` |
 | `label:` | Has label | `label:important` |
 
+**Note:** `has:attachment` is supported but added automatically
+
 Combine operators for precise searches:
 ```bash
-bun run src/index.ts "from:reports@company.com has:attachment filename:pdf after:2024/01/01"
+bun run src/index.ts "from:reports@company.com filename:pdf after:2024/01/01"
 ```
 
 ## First Run

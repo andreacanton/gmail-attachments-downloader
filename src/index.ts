@@ -1,21 +1,21 @@
 // Gmail Attachments Downloader - Main entry point
 import { authorize } from "./auth";
 import {
-  searchMessages,
-  getMessageAttachments,
-  downloadAttachment,
   type AttachmentInfo,
+  downloadAttachment,
+  getMessageAttachments,
+  searchMessages,
 } from "./gmail";
-import { createZip, writeZipToFile, type FileEntry } from "./zip";
+import { createZip, type FileEntry, writeZipToFile } from "./zip";
 
-// Exit codes (T5.5)
 const EXIT_SUCCESS = 0;
 const EXIT_USER_ERROR = 1;
 const EXIT_AUTH_ERROR = 2;
 const EXIT_API_ERROR = 3;
 const EXIT_FS_ERROR = 4;
 
-// T5.1 - Argument parsing
+const LIMIT_MESSAGES = 100;
+
 interface ParsedArgs {
   query: string;
   output: string;
@@ -56,7 +56,6 @@ function parseArgs(args: string[]): ParsedArgs {
   return result;
 }
 
-// T5.2 - Help display
 function showHelp(): void {
   console.log(`
 Gmail Attachments Downloader
@@ -85,14 +84,12 @@ Query Syntax:
 `);
 }
 
-// T5.3 - Progress display helpers
 function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-// T5.4 - Main orchestration
 async function main(): Promise<void> {
   // Parse arguments
   const args = parseArgs(process.argv.slice(2));
@@ -121,6 +118,11 @@ async function main(): Promise<void> {
   }
 
   // Step 2: Search messages
+  const hasAttachmentQuery = "has:attachment";
+  if (!args.query.includes(hasAttachmentQuery)) {
+    console.log(`Warning: missing ${hasAttachmentQuery}...it will be added`);
+    args.query += ` ${hasAttachmentQuery}`;
+  }
   console.log(`Searching for messages matching: "${args.query}"`);
   let messageIds: string[];
   try {
@@ -142,11 +144,11 @@ async function main(): Promise<void> {
 
   console.log(`Found ${messageIds.length} message(s)`);
 
-  if (messageIds.length > 100) {
+  if (messageIds.length > LIMIT_MESSAGES) {
     console.log(
-      "Warning: Large number of messages found. Auto-limiting at 100 messages.",
+      `Warning: Large number of messages found. Auto-limiting at ${LIMIT_MESSAGES} messages.`,
     );
-    messageIds = messageIds.slice(0, 100);
+    messageIds = messageIds.slice(0, LIMIT_MESSAGES);
   }
 
   // Step 3: Collect attachment metadata
@@ -188,7 +190,8 @@ async function main(): Promise<void> {
 
   const totalSize = allAttachments.reduce((sum, a) => sum + a.size, 0);
   console.log(
-    `Found ${allAttachments.length} attachment(s) (${formatBytes(totalSize)} total)`,
+    `Found ${allAttachments.length} attachment(s) (${formatBytes(totalSize)
+    } total)`,
   );
 
   // Step 4: Download attachments
@@ -233,7 +236,8 @@ async function main(): Promise<void> {
   try {
     const outputPath = await writeZipToFile(zipBuffer, args.output);
     console.log(
-      `\nCreated ${outputPath} with ${files.length} file(s) (${formatBytes(zipBuffer.length)})`,
+      `\nCreated ${outputPath} with ${files.length} file(s) (${formatBytes(zipBuffer.length)
+      })`,
     );
   } catch (error) {
     console.error("Failed to write ZIP file:", (error as Error).message);
