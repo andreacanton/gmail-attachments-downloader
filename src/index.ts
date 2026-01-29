@@ -106,7 +106,7 @@ async function main(): Promise<void> {
   // Validate query is provided
   if (!args.query) {
     console.error("Error: Search query is required");
-    console.error('Run with --help for usage information');
+    console.error("Run with --help for usage information");
     process.exit(EXIT_USER_ERROR);
   }
 
@@ -142,6 +142,13 @@ async function main(): Promise<void> {
 
   console.log(`Found ${messageIds.length} message(s)`);
 
+  if (messageIds.length > 100) {
+    console.log(
+      "Warning: Large number of messages found. Auto-limiting at 100 messages.",
+    );
+    messageIds = messageIds.slice(0, 100);
+  }
+
   // Step 3: Collect attachment metadata
   console.log("Scanning messages for attachments...");
   const allAttachments: AttachmentInfo[] = [];
@@ -153,15 +160,22 @@ async function main(): Promise<void> {
       allAttachments.push(...attachments);
       // Progress indicator every 10 messages
       if ((i + 1) % 10 === 0 || i === messageIds.length - 1) {
-        process.stdout.write(`\rScanned ${i + 1}/${messageIds.length} messages`);
+        process.stdout.write(
+          `\rScanned ${i + 1}/${messageIds.length} messages`,
+        );
       }
     } catch (error) {
       const msg = (error as Error).message;
       if (msg.includes("not found") || msg.includes("deleted")) {
-        console.warn(`\nWarning: Message ${messageId} was not found (may have been deleted), skipping`);
+        console.warn(
+          `\nWarning: Message ${messageId} was not found (may have been deleted), skipping`,
+        );
         continue;
       }
-      console.error(`\nFailed to get attachments from message ${messageId}:`, msg);
+      console.error(
+        `\nFailed to get attachments from message ${messageId}:`,
+        msg,
+      );
       process.exit(EXIT_API_ERROR);
     }
   }
@@ -173,7 +187,9 @@ async function main(): Promise<void> {
   }
 
   const totalSize = allAttachments.reduce((sum, a) => sum + a.size, 0);
-  console.log(`Found ${allAttachments.length} attachment(s) (${formatBytes(totalSize)} total)`);
+  console.log(
+    `Found ${allAttachments.length} attachment(s) (${formatBytes(totalSize)} total)`,
+  );
 
   // Step 4: Download attachments
   console.log("Downloading attachments...");
@@ -181,17 +197,26 @@ async function main(): Promise<void> {
 
   for (let i = 0; i < allAttachments.length; i++) {
     const att = allAttachments[i];
-    process.stdout.write(`\rDownloading [${i + 1}/${allAttachments.length}]: ${att.filename}`);
+    process.stdout.write(
+      `\rDownloading [${i + 1}/${allAttachments.length}]: ${att.filename}`,
+    );
     // Clear the rest of the line (for shorter filenames after longer ones)
     process.stdout.write("\x1b[K");
 
     try {
-      const file = await downloadAttachment(auth, att.messageId, att.attachmentId, att.filename);
+      const file = await downloadAttachment(
+        auth,
+        att.messageId,
+        att.attachmentId,
+        att.filename,
+      );
       files.push(file);
     } catch (error) {
       const msg = (error as Error).message;
       if (msg.includes("not found") || msg.includes("deleted")) {
-        console.warn(`\nWarning: Attachment ${att.filename} was not found, skipping`);
+        console.warn(
+          `\nWarning: Attachment ${att.filename} was not found, skipping`,
+        );
         continue;
       }
       console.error(`\nFailed to download ${att.filename}:`, msg);
@@ -207,7 +232,9 @@ async function main(): Promise<void> {
   // Step 6: Write ZIP to disk
   try {
     const outputPath = await writeZipToFile(zipBuffer, args.output);
-    console.log(`\nCreated ${outputPath} with ${files.length} file(s) (${formatBytes(zipBuffer.length)})`);
+    console.log(
+      `\nCreated ${outputPath} with ${files.length} file(s) (${formatBytes(zipBuffer.length)})`,
+    );
   } catch (error) {
     console.error("Failed to write ZIP file:", (error as Error).message);
     process.exit(EXIT_FS_ERROR);
