@@ -112,6 +112,9 @@ async function refreshTokenIfNeeded(
   return token;
 }
 
+// Export internal functions for testing
+export { loadCredentials, loadCachedToken, saveToken, refreshTokenIfNeeded };
+
 // T2.5 - Main authorize function
 export async function authorize(): Promise<OAuth2Client> {
   const credentials = await loadCredentials();
