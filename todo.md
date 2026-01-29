@@ -178,57 +178,57 @@
 - **Dependencies:** T1.3
 - **Description:** Parse CLI arguments for query and output file
 - **Acceptance Checks:**
-  - [ ] Parses positional argument as search query
-  - [ ] Parses `-o` / `--output` for output filename
-  - [ ] Default output filename is `attachments.zip`
-  - [ ] Validates query is provided
+  - [x] Parses positional argument as search query
+  - [x] Parses `-o` / `--output` for output filename
+  - [x] Default output filename is `attachments.zip`
+  - [x] Validates query is provided
 
 ### T5.2 - Implement help display
 - **Difficulty:** simple
 - **Dependencies:** T5.1
 - **Description:** Show usage information with `-h` / `--help`
 - **Acceptance Checks:**
-  - [ ] `-h` and `--help` trigger help display
-  - [ ] Shows usage syntax
-  - [ ] Shows available options
-  - [ ] Shows example commands
-  - [ ] Exits with code 0 after help
+  - [x] `-h` and `--help` trigger help display
+  - [x] Shows usage syntax
+  - [x] Shows available options
+  - [x] Shows example commands
+  - [x] Exits with code 0 after help
 
 ### T5.3 - Implement progress display
 - **Difficulty:** medium
 - **Dependencies:** T3.1, T3.2, T3.3
 - **Description:** Show progress during scanning and downloading
 - **Acceptance Checks:**
-  - [ ] Shows "Searching for messages..." during search
-  - [ ] Shows "Found X messages with Y attachments"
-  - [ ] Shows download progress: "Downloading [X/Y]: filename"
-  - [ ] Shows final summary: "Created output.zip with X files (Y MB)"
+  - [x] Shows "Searching for messages..." during search
+  - [x] Shows "Found X messages with Y attachments"
+  - [x] Shows download progress: "Downloading [X/Y]: filename"
+  - [x] Shows final summary: "Created output.zip with X files (Y MB)"
 
 ### T5.4 - Implement main orchestration
 - **Difficulty:** medium
 - **Dependencies:** T2.5, T3.1, T3.2, T3.3, T4.1, T4.2, T4.3, T5.1, T5.3
 - **Description:** Wire everything together in main() function
 - **Acceptance Checks:**
-  - [ ] Parses arguments
-  - [ ] Authenticates
-  - [ ] Searches messages
-  - [ ] Collects all attachments
-  - [ ] Downloads all attachments
-  - [ ] Creates and writes ZIP
-  - [ ] Displays progress throughout
-  - [ ] Exits with code 0 on success
+  - [x] Parses arguments
+  - [x] Authenticates
+  - [x] Searches messages
+  - [x] Collects all attachments
+  - [x] Downloads all attachments
+  - [x] Creates and writes ZIP
+  - [x] Displays progress throughout
+  - [x] Exits with code 0 on success
 
 ### T5.5 - Implement error reporting and exit codes
 - **Difficulty:** simple
 - **Dependencies:** T5.4
 - **Description:** Proper error messages and exit codes for all failure modes
 - **Acceptance Checks:**
-  - [ ] Exit code 0 on success
-  - [ ] Exit code 1 on user error (missing query, bad args)
-  - [ ] Exit code 2 on auth error
-  - [ ] Exit code 3 on API error
-  - [ ] Exit code 4 on file system error
-  - [ ] All errors print to stderr
+  - [x] Exit code 0 on success
+  - [x] Exit code 1 on user error (missing query, bad args)
+  - [x] Exit code 2 on auth error
+  - [x] Exit code 3 on API error
+  - [x] Exit code 4 on file system error
+  - [x] All errors print to stderr
 
 ---
 
@@ -261,10 +261,10 @@
 - **Dependencies:** T6.1
 - **Description:** Update documentation with new usage instructions
 - **Acceptance Checks:**
-  - [ ] Installation instructions updated for Bun
-  - [ ] Usage examples included
-  - [ ] All CLI options documented
-  - [ ] Troubleshooting section for common errors
+  - [x] Installation instructions updated for Bun
+  - [x] Usage examples included
+  - [x] All CLI options documented
+  - [x] Troubleshooting section for common errors
 
 ---
 
@@ -276,12 +276,12 @@
 | 2 | Authentication | 5 | 5 | 0 |
 | 3 | Gmail API Operations | 4 | 4 | 0 |
 | 4 | ZIP Creation | 3 | 3 | 0 |
-| 5 | CLI Interface | 5 | 0 | 5 |
-| 6 | Testing & Documentation | 3 | 0 | 3 |
-| **Total** | | **23** | **15** | **8** |
+| 5 | CLI Interface | 5 | 5 | 0 |
+| 6 | Testing & Documentation | 3 | 1 | 2 |
+| **Total** | | **23** | **21** | **2** |
 
-### Progress: 15/23 tasks complete (65%)
+### Progress: 21/23 tasks complete (91%)
 
-### Next Task: T5.1 - Implement argument parsing
-- Dependencies met (T1.3 complete)
-- Simple difficulty
+### Remaining Tasks: T6.1 & T6.2 - Manual Testing
+- Requires credentials.json for real Gmail account testing
+- Run: `bun run src/index.ts "has:attachment" -o test.zip`
