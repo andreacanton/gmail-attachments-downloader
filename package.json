@@ -2,8 +2,10 @@
   "name": "gmail-attachments-downloader",
   "version": "1.0.0",
   "description": "a script for downloading in separate folders the attachments of a gmail account",
-  "main": "index.js",
+  "type": "module",
+  "main": "src/index.ts",
   "scripts": {
+    "start": "bun run src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,6 +23,12 @@
   },
   "homepage": "https://github.com/andreacanton/gmail-attachments-downloader#readme",
   "dependencies": {
-    "googleapis": "^39.2.0"
+    "googleapis": "^39.2.0",
+    "jszip": "^3.10.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "bun-types": "^1.1.0",
+    "typescript": "^5.4.0"
   }
 }
